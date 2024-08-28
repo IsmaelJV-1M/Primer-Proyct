@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
@@ -9,36 +9,40 @@ import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 
 
+const label = { inputProps:{ 'aria-label': 'Checkbox demo' },};
+
+
 const EjersicioOne = () => {
 
-  const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+    const [name, setName] = useState('');
+    const [age, setAge] = useState('');
+    const [lastName, setLast] = useState('');
+    const [iseChecked, setIseChecked] = useState(false);
 
-  const [age, setAge] = useState('');
-  const [name, setName] = useState('');
-  const [box, setBox] = useState('');
-
-  const declareAge = (e) => {
-    setAge(e.target.value);
+    const declareName = (e) => {
+        setName(e.target.value);
   }
 
-  const declareName = (e) => {
-    setName(e.target.value);
+    const declareLast = (e) => {
+      setLast(e.target.value);
   }
 
-  const declareBox = (e) => {
-    setBox(e.target.value);
+    const declareAge = (e) => {
+        setAge(e.target.value);
   }
 
-  const guardarDate = () => {
-    console.log('Guardad datos');
-    console.log(age);
-    console.log(name);
-    console.log(box)
+    const declareBox = (e) => {
+        setIseChecked(e.target.checked);
+  }
+
+    const guardarData = () => {
+      setName('');
+      setLast('');
+      setAge('');
   }
 
   return (
-
-    <Box
+    <Box 
       component="form"
       sx={{
         '& > :not(style)': { m: 1, width: '25ch' },
@@ -46,46 +50,56 @@ const EjersicioOne = () => {
       noValidate
       autoComplete="off"
     >
-      <TextField
+    <TextField
         id="standard-basic" 
         label="Standard" 
         variant="standard"
         value={name}
         onChange={declareName}
         name='name'
-      />
+    />
 
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Age</InputLabel>
-        <Select
+    <TextField
+        id="standard-basic" 
+        label="Standard" 
+        variant="standard"
+        value={lastName}
+        onChange={declareLast}
+        name='Last name'
+    />
+
+    <FormControl fullWidth>
+    <InputLabel id="demo-simple-select-label">Age</InputLabel>
+    <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={age}
-          label="Age"
           name='age'
           onChange={declareAge}
-        >
+    >
           <MenuItem value={10}>Ten</MenuItem>
           <MenuItem value={20}>Twenty</MenuItem>
           <MenuItem value={30}>Thirty</MenuItem>
           <MenuItem value={40}>Forty</MenuItem>
           <MenuItem value={50}>Fifty</MenuItem>
         </Select>
-      </FormControl>
+    </FormControl>
 
-      <Checkbox 
-          {...label} defaultChecked 
+    <Checkbox
+          {...label}
+          checked={iseChecked}
           onChange={declareBox}
-      />
+    />
 
-      <Button 
+    <Button 
         variant="outlined"
-        onClick={guardarDate}
-      >
+        onClick={guardarData}
+    >
           Keep
-      </Button>
-    </Box>
+    </Button>
 
+
+    </Box>
   )
 }
 

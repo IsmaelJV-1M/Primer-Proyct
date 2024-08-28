@@ -11,26 +11,47 @@ import Button from '@mui/material/Button';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
-const EjersicioTwo = () => {
+const TextUse = ({onAddData}) => {
 
-    const [date, setDate] = useState ({
-        nombre: '',
+    const reiniciarSelect = {
+        name: '',
         apellido: '',
         age: '',
-    })
-
-    const archivar = (e) => {
-        const name = e.target.name;
-        const list = e.target.value;
-        setDate({
-            ...date,
-            [name] : list 
-        })
+        checked: false
     }
 
-    const guardarDate = () => {
-        console.log(date);
-    }
+    const [date, setDate] = useState(reiniciarSelect)
+
+
+    const handleChange  = (e) => {
+      const { name, value } = e.target;
+      setDate({
+        ...date,
+        [name]: value,
+      });
+    };
+
+    const handleCheckboxChange = (e) => {
+      setDate({
+        ...date,
+        checked: e.target.checked,
+      });
+    };
+
+    const handleSubmit = () => {
+      console.log('Form Data:', date);
+      onAddData(date);
+      setDate({
+        name: '',
+
+        option: '',
+        checked: false,
+      });
+
+      setDate(reiniciarSelect);
+    };
+
+    
 
   return (
 
@@ -42,33 +63,31 @@ const EjersicioTwo = () => {
       noValidate
       autoComplete="off"
     >
-      <TextField
-        id="standard-basic" 
+      <TextField 
         label="Standard" 
         variant="standard"
-        value={date.nombre}
-        onChange={archivar}
-        name='nombre'
+        value={date.name}
+        onChange={handleChange}
+        name='name'
+        fullWidth
       />
 
-<TextField 
-    id="outlined-basic" 
-    label="Outlined" 
-    variant="outlined" 
-    value={date.apellido}
-    onChange={archivar}
-    name='apellido'
-/>
+      <TextField 
+        label="Outlined" 
+        variant="outlined" 
+        value={date.apellido}
+        onChange={handleChange}
+        name='apellido'
+        fullWidth
+     />
 
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Age</InputLabel>
         <Select
           labelId="demo-simple-select-label"
-          id="demo-simple-select"
           value={date.age}
-          label="Age"
           name='age'
-          onChange={archivar}
+          onChange={handleChange}
         >
           <MenuItem value={10}>Ten</MenuItem>
           <MenuItem value={20}>Twenty</MenuItem>
@@ -79,21 +98,20 @@ const EjersicioTwo = () => {
       </FormControl>
 
       <Checkbox 
-          {...label} defaultChecked
-
-          onChange={archivar}
+          {...label}
+          onChange={handleCheckboxChange}
       />
 
       <Button 
-        variant="outlined"
-        onClick={guardarDate}
+        variant="contained"
+        onClick={handleSubmit}
       >
           Keep
       </Button>
+
     </Box>
 
   )
 }
 
-export default EjersicioTwo
-
+export default TextUse
